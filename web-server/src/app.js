@@ -25,7 +25,7 @@ app.use(express.static(publicDirectoryPath))
 // Using wildcards: It's meant to catch any specific patterns (ex: '*' or 'help/*')
 app.get('', (req, res) => {
     res.render('index', {
-        title: 'Weather App',
+        title: 'Weather',
         name: 'Felipe Pineda'
     })
 })
