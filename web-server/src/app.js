@@ -22,6 +22,7 @@ app.use(express.static(publicDirectoryPath))
 // callback function here is what to give back to the user
 // req: information about the incoming request to the server
 // res: bunch oif methods allowing us to customize what we are going to send back to the requester
+// Using wildcards: It's meant to catch any specific patterns (ex: '*' or 'help/*')
 app.get('', (req, res) => {
     res.render('index', {
         title: 'Weather App',
@@ -49,6 +50,25 @@ app.get('/weather', (req, res) => {
         forecast: 'It is snowing',
         location: 'Chapel Hill'
     }) // what is sent back to the requester
+})
+
+app.get('/help/*', (req, res) => {
+    res.render('404', {
+        title: '404 Help',
+        name: 'Felipe Pineda',
+        errorMessage: 'Help article not found.'
+    })
+})
+
+
+// for anything that isn't already set above
+// It should be the last get because it should try to match with the pages above before it goes to this one. It's called middleware
+app.get('*', (req, res) => {
+    res.render('404', {
+        title: '404',
+        name: 'Felipe Pineda',
+        errorMessage: 'Page not found.'
+    })
 })
 
 
