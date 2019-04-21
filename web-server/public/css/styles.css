@@ -4,6 +4,14 @@ body {
     max-width: 650px;
     margin: 0 auto;
     padding: 0 16px;
+
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh
+}
+
+.main-content {
+    flex-grow: 1;
 }
 
 footer {
@@ -27,4 +35,11 @@ header a {
     color: #888888;
     margin-right: 16px;
     text-decoration: none;
+}
+
+.portrait {
+    width: 250px;
+    -webkit-box-shadow: 7px 8px 18px -5px rgba(0, 0, 255, .2);
+    -moz-box-shadow: 7px 8px 18px -5px rgba(0, 0, 255, .2);
+    box-shadow: 7px 8px 18px -5px rgba(0, 0, 255, .2);
 }
