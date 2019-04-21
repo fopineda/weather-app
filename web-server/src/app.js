@@ -2,10 +2,17 @@ const path = require('path')
 const express = require('express')
 
 const app = express()
-const publicDirectoryPath = path.join(__dirname, '../public')
 
-app.set('view engine', 'hbs') // sets view engine to handlebars and points directory views
-app.use(express.static(publicDirectoryPath)) // Express to serve up the public directory and all of its files (html, css, images, js)
+// Define paths for express configuration
+const publicDirectoryPath = path.join(__dirname, '../public')
+const viewsPath = path.join(__dirname, '../templates')
+
+// Setup handlebars engine and views location
+app.set('view engine', 'hbs') 
+app.set('views', viewsPath) // allows to set own "views" folder with different name
+
+// Setup static directory to serve (html, css, images, js)
+app.use(express.static(publicDirectoryPath))
 
 
 // ------ Routes ---------
