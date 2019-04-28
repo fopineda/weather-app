@@ -1,6 +1,8 @@
 const path = require('path')
 const express = require('express')
 const hbs = require('hbs')
+const geocode = require('./Utils/geocode')
+const forecast = require('./Utils/forecast')
 
 const app = express()
 
@@ -46,10 +48,41 @@ app.get('/help', (req, res) => {
 })
 
 app.get('/weather', (req, res) => {
+    // query allows to grab item specified in URL
+    if (!req.query.location) {  // No address provided
+        return res.send({
+            error: "No location provided, please provide one."
+        })
+    }
+
+    geocode(req.query.location, (error, {latitude, longitude, location}) => {
+        // Description: Finds lat, long pair of the location given
+        if (error) {
+            return res.send({ error })
+        }
+        forecast(longitude, latitude, (error, forecastData) => {
+            // Description: Finds weather for a given location. Parameters must be in lat-long pair
+            if (error){
+                return res.send({ error })
+            }
+            return res.send({
+                forecast: forecastData,
+                location: location
+            })
+        })
+    })
+})
+
+app.get('/products', (req, res) => {
+    if (!req.query.search) {
+        return res.send({
+            error: 'You must provide a search term!'
+        })
+    }
+    console.log(req.query.search)
     res.send({
-        forecast: 'It is snowing',
-        location: 'Chapel Hill'
-    }) // what is sent back to the requester
+        products: []
+    })
 })
 
 app.get('/help/*', (req, res) => {
