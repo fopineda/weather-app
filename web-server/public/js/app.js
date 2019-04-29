@@ -4,22 +4,32 @@
 // Fetch API: Browser based API
 //      - Used in all modern browsers, but not in NodeJS. This means it cannot be made on the backed.
 
-// glimpse of promises
-fetch('http://puzzle.mead.io/puzzle').then((response) => {
-    response.json().then((data) => {
-        console.log(data)
-    })
-})
 
 
-fetch('http://localhost:3000/weather?location=Chapel%20Hill').then((response) => {
-    response.json().then((data) => {
-        if (data.error) {
-            console.log(data.error)
-        }
-        else{
-            console.log(data.location)
-            console.log(data.forecast)
-        }
+
+// Javascript representation of the form element, we can manipulate if needed.
+const weatherForm = document.querySelector('form')
+const searchInput = document.querySelector('input')
+const messageOne = document.querySelector('#message-one')
+const messageTwo = document.querySelector('#message-two')
+
+weatherForm.addEventListener('submit', (e) => {
+    e.preventDefault()  // prevents the browser from refresh the page, which is the old way of doing forms. 
+    const location = searchInput.value
+    messageOne.textContent = 'Loading...'
+    messageTwo.textContent = ''
+    // Fetches the forecast of the location provided by the search input
+    fetch('http://localhost:3000/weather?location='+ location).then((response) => {
+        response.json().then((data) => {
+            if (data.error) {
+                messageOne.textContent = data.error
+                messageTwo.textContent = ''
+            }
+            else{
+                messageOne.textContent = data.location
+                messageTwo.textContent = data.forecast
+            }
+        })
     })
+    
 })
