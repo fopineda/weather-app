@@ -54,8 +54,7 @@ app.get('/weather', (req, res) => {
             error: "No location provided, please provide one."
         })
     }
-
-    geocode(req.query.location, (error, {latitude, longitude, location}) => {
+    geocode(req.query.location, (error, {latitude, longitude, location} = {}) => {
         // Description: Finds lat, long pair of the location given
         if (error) {
             return res.send({ error })
@@ -93,7 +92,6 @@ app.get('/help/*', (req, res) => {
     })
 })
 
-
 // for anything that isn't already set above
 // It should be the last get because it should try to match with the pages above before it goes to this one. It's called middleware
 app.get('*', (req, res) => {
@@ -103,6 +101,9 @@ app.get('*', (req, res) => {
         errorMessage: 'Page not found.'
     })
 })
+
+
+
 
 
 app.listen(3000, () => {
