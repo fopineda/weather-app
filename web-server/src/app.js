@@ -21,13 +21,14 @@ app.use(express.static(publicDirectoryPath))
 
 
 // ------ Routes ---------
+// Usually placed elsewhere but since it's a small application I can put them here
 // callback function here is what to give back to the user
 // req: information about the incoming request to the server
 // res: bunch oif methods allowing us to customize what we are going to send back to the requester
 // Using wildcards: It's meant to catch any specific patterns (ex: '*' or 'help/*')
 app.get('', (req, res) => {
     res.render('index', {
-        title: 'Weather',
+        title: 'Home',
         name: 'Felipe Pineda'
     })
 })
@@ -47,6 +48,7 @@ app.get('/help', (req, res) => {
     })
 })
 
+// API
 app.get('/weather', (req, res) => {
     // query allows to grab item specified in URL
     if (!req.query.location) {  // No address provided
@@ -84,6 +86,7 @@ app.get('/products', (req, res) => {
     })
 })
 
+// Ex: /help/nothing, /help/lol
 app.get('/help/*', (req, res) => {
     res.render('404', {
         title: '404 Help',
@@ -94,6 +97,7 @@ app.get('/help/*', (req, res) => {
 
 // for anything that isn't already set above
 // It should be the last get because it should try to match with the pages above before it goes to this one. It's called middleware
+// Throw error 404 page
 app.get('*', (req, res) => {
     res.render('404', {
         title: '404',
