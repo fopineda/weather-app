@@ -17,7 +17,7 @@ Application exists inside the web-server folder.
 
 Install the dependencies and devDependencies and start the server.
 
-```sh
+```
 $ cd weather-app/web-server
 $ npm install
 $ cd ..
